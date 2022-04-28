@@ -1,7 +1,10 @@
 // separate the application logic from the DOM stuff, do it in different modules
 // Single Responsibility - a class should have one responsibility
 import { pageLayout } from './page.js';
+import { inbox } from './inbox.js';
+
 pageLayout();
+inbox();
 
 
 class todos{

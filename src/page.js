@@ -15,8 +15,8 @@ header.appendChild(tick);
 const sidebar = document.createElement('div');
 parent.appendChild(sidebar).className = 'sidebar';
 
-const main = document.createElement('div');
-parent.appendChild(main).className = 'main';
+const inbox = document.createElement('div');
+parent.appendChild(inbox).className = 'inbox';
 
 const footer = document.createElement('div');
 parent.appendChild(footer).className = 'footer';

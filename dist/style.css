@@ -92,6 +92,31 @@ img[src*=check]{
     background-color: var(--secondary-light);
 }
 
-.main{
+.inbox{
     background-color: var(--primary-light);
+    padding: 30px 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inbox Content - inbox.js*/
+
+.inboxTitle{
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--primary-dark);
+    padding-bottom: 20px;
+}
+
+.addTask{
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    padding: 10px;
+    font-size: 18px;
+    color: var(--primary-dark);
+}
+
+.addTask:hover{
+    background-color: rgba(0, 0, 0, 0.1);
 }
