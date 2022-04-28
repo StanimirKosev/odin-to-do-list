@@ -25,17 +25,20 @@ function inbox(){
         todoTitle.setAttribute("type", "text");
         todoTitle.setAttribute("name", "title");
         todoTitle.setAttribute("placeholder", "Title");
+        todoTitle.setAttribute("id","title");
         form.appendChild(todoTitle);
 
         const todoDesc = document.createElement('input');
         todoDesc.setAttribute("type", "text");
         todoDesc.setAttribute("name", "description");
         todoDesc.setAttribute("placeholder", "Description");
+        todoDesc.setAttribute("id","description");
         form.appendChild(todoDesc);
 
         const todoDate = document.createElement('input');
         todoDate.setAttribute("type", "date");
         todoDate.setAttribute("name", "date");
+        todoDate.setAttribute("id","date");
         form.appendChild(todoDate);
 
         const todoImportance = document.createElement('input');
@@ -62,12 +65,40 @@ function inbox(){
         form.appendChild(lessImporant);
 
         const addBtn = document.createElement('button');
+        addBtn.setAttribute('type','button');
         addBtn.textContent = 'Add';
         form.appendChild(addBtn).className = 'addBtn';
 
         const rmvBtn = document.createElement('button');
+        rmvBtn.setAttribute('type','button');
         rmvBtn.textContent = 'Remove';
         form.appendChild(rmvBtn).className = 'rmvBtn';
+
+        addBtn.addEventListener('click', () => { 
+            makeObjDOM()
+        })
+    }
+
+    function makeObjDOM(){  // title,description,date,priority
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value; 
+        const date = document.getElementById('date').value;
+       /* const priority = document.getElementById('lessImportant').value;*/
+        
+        const obj = document.createElement('div');    
+        inbox.appendChild(obj).className = 'obj';
+        
+        const objTitle = document.createElement('p');
+        objTitle.textContent = title;
+        obj.appendChild(objTitle).className = 'objTitle';
+
+        const objDesc = document.createElement('p');
+        objDesc.textContent = description;
+        obj.appendChild(objDesc).className = 'objDesc';
+
+        const objDate = document.createElement('div');
+        objDate.textContent = date;
+        obj.appendChild(objDate).className = 'objDate';
     }
 
 }
