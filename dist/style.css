@@ -120,3 +120,66 @@ img[src*=check]{
 .addTask:hover{
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+form{
+    width: 300px;
+    height: 280px;
+    background-color: var(--secondary-light);
+    border: 1px solid var(--secondary-light);
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3,1fr) 0.5fr 0.5fr 1fr;
+    padding: 20px;
+    color: var(--primary-dark);
+}
+
+input[name*=title], /* First 3 child's of form - title,desc and date input fields in the modal*/
+input[name*=description],
+input[name*=date]{
+    grid-column: 1 / -1;
+    width: 95%;
+    height: 40px;
+    border-radius:6px;
+    border: 1px solid var(--secondary-light);
+    font-size:18px;
+    color: var(--primary-dark);
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+label[for*=important]{ /* Labels of the radio buttons in the modal*/
+    grid-area: 4 / 1 / 5  / 2;
+    color: rgba(200, 0, 0, 0.5);
+}
+
+label[for*=lessImportant]{
+    grid-area: 5 / 1 / 6 / 2;
+}
+
+.addBtn,
+.rmvBtn{
+    border-radius:6px;
+    border: 1px solid var(--secondary-light);
+    font-size:18px;
+    color: var(--primary-dark);
+    width: 145px;
+    height: 40px;
+    margin: 20px 3px 3px 0px;
+}
+
+.addBtn{
+    background-color: rgba(0, 200, 0, 0.5);
+}
+
+.rmvBtn{
+    background-color: rgba(200, 0, 0, 0.5);
+}
+
+.addBtn:hover{
+    background-color: rgba(0, 200, 0, 0.4);
+}
+
+.rmvBtn:hover{
+    background-color: rgba(200, 0, 0, 0.4);
+}

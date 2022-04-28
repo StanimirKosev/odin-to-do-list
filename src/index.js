@@ -16,3 +16,9 @@ class todos{
         this.checkList = checkList;
     }
 }
+
+
+/**Prevents chrome pop up window when refreshing*/
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+  }
