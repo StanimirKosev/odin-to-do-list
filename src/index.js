@@ -2,8 +2,9 @@
 // Single Responsibility - a class should have one responsibility
 import { pageLayout } from './page.js';
 import { inbox } from './inbox.js';
-import { modal } from './modal.js';
-
+import { modal } from './modal.js';  // 1. priority and checklist on todos 
+import { set } from 'date-fns';
+                                    // 2. functionality on todos - evertyhing
 pageLayout();
 inbox();
 modal();
@@ -17,6 +18,7 @@ class Todo{
         this.priority = priority;
        /* this.checkList = checkList;*/
     }
+
 }
 
 
@@ -26,17 +28,17 @@ addTaskBtn.addEventListener('click', () => {
     const makeTodo = document.querySelector('.addBtn'); 
     makeTodo.addEventListener('click', () => {
     
-        const title = document.getElementById('title').value; // 1. instead of taking the values like this, you might take em from the actual object
-        const description = document.getElementById('description').value; // to use these here only for the creation of the obj
-        const date = document.getElementById('date').value;             // and then just have a function in inbox.js which creates dom but gets the values
-        const priority = document.getElementById('lessImportant').value; // from here? idk. , the actual methods need to be the removing/changig status etc
-        makeTodoo(title,description,date,priority); // the things that the todos are going to do NEED TO BE HERE
+        const title = document.getElementById('title').value; 
+        const description = document.getElementById('description').value;
+        const date = document.getElementById('date').value;             
+        const priority = document.getElementById('lessImportant').value; 
+        makeTodoo(title,description,date,priority); 
     })
 })
 
 function  makeTodoo(title,description,date,priority){
     const todo = new Todo(title,description,date,priority);
-    console.log(todo); 
+
 }
 
 

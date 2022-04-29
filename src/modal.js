@@ -56,23 +56,49 @@ function modal(){
     form.appendChild(addBtn).className = 'addBtn';
 
     const rmvBtn = document.createElement('button');
+    rmvBtn.setAttribute('data-close-button','#modal'); // targets the modal ( form el )
     rmvBtn.setAttribute('type','button');
-    rmvBtn.textContent = 'Remove';
+    rmvBtn.textContent = 'Cancel';
     form.appendChild(rmvBtn).className = 'rmvBtn';
-
-    const closeButton = document.createElement('button');
-    closeButton.setAttribute('data-close-button','#modal'); // targets the modal ( form el )
-    closeButton.setAttribute('type','button');
-    closeButton.textContent = 'X';
-    form.appendChild(closeButton).className = 'closeBtn';
 
     const overlay = document.createElement('div');
     overlay.setAttribute('id','overlay');
     inbox.appendChild(overlay);
-    
-    /*addBtn.addEventListener('click', () => { 
-        makeObjDOM()
-    })*/
+
+    addBtn.addEventListener('click',() => {
+        makeObjDOM();
+    })
+
+    function makeObjDOM(){  // title,description,date,priority
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value; 
+        const date = document.getElementById('date').value;
+       /* const priority = document.getElementById('lessImportant').value;*/
+
+        const listObj = document.querySelector('.listObj'); // place all todos in one element, more comfy for css
+        
+        const obj = document.createElement('div');   
+        listObj.appendChild(obj).className = 'obj'; 
+        
+        const objTitle = document.createElement('p');
+        objTitle.textContent = title;
+        obj.appendChild(objTitle).className = 'objTitle';
+
+        const objDesc = document.createElement('p');
+        objDesc.textContent = description;
+        obj.appendChild(objDesc).className = 'objDesc';
+
+        const objDate = document.createElement('div');
+        objDate.textContent = date;
+        obj.appendChild(objDate).className = 'objDate';
+
+        const rmvObj = document.createElement('button');
+        rmvObj.setAttribute('data-close-button','#modal'); 
+        rmvObj.setAttribute('type','button');
+        rmvObj.textContent = 'X';
+        obj.appendChild(rmvObj).className = 'rmvObj'; 
+    }
+
 }
 
 export { modal };
