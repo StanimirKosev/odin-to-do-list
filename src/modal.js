@@ -30,7 +30,8 @@ function modal(){
     const todoImportance = document.createElement('input');
     todoImportance.setAttribute("type", "radio");
     todoImportance.setAttribute("name", "ticket_type");
-    todoImportance.setAttribute("id","important")
+    todoImportance.setAttribute("id","important");
+    todoImportance.setAttribute('value','Important');
     
     const important = document.createElement('label');
     important.textContent = 'Important';
@@ -43,9 +44,10 @@ function modal(){
     todoImportance2.setAttribute("name", "ticket_type");
     todoImportance2.setAttribute("id","lessImportant")
     todoImportance2.setAttribute('checked','true');
+    todoImportance2.setAttribute('value','Not important');
 
     const lessImporant = document.createElement('label');
-    lessImporant.textContent = 'Less important';
+    lessImporant.textContent = 'Not important';
     lessImporant.setAttribute("for","lessImportant");
     form.appendChild(todoImportance2);
     form.appendChild(lessImporant);
@@ -73,7 +75,7 @@ function modal(){
         const title = document.getElementById('title').value;
         const description = document.getElementById('description').value; 
         const date = document.getElementById('date').value;
-       /* const priority = document.getElementById('lessImportant').value;*/
+       
 
         const listObj = document.querySelector('.listObj'); // place all todos in one element, more comfy for css
         
@@ -93,12 +95,37 @@ function modal(){
         obj.appendChild(objDate).className = 'objDate';
 
         const rmvObj = document.createElement('button');
-        rmvObj.setAttribute('data-close-button','#modal'); 
         rmvObj.setAttribute('type','button');
         rmvObj.textContent = 'X';
         obj.appendChild(rmvObj).className = 'rmvObj'; 
+
+        if (displayRadioValue() === 'Important'){
+            const importanceObj = document.createElement('div');
+            importanceObj.textContent = displayRadioValue();
+            obj.appendChild(importanceObj).className = 'importanceObj';
+        }
+        else if(displayRadioValue() === 'Not important'){
+            const lessImporantObj = document.createElement('div');
+            lessImporantObj.textContent = displayRadioValue();
+            obj.appendChild(lessImporantObj).className = 'lessImportantObj';
+        }
+
+        for ( let i = 0 ; i < listObj.children.length ; i++){
+            obj.setAttribute('data-obj-index',i);
+        }
     }
 
+    function displayRadioValue() {
+        const ele = document.getElementsByName('ticket_type');
+        let priority;
+    
+        for(let i = 0; i < ele.length; i++) {
+            if(ele[i].checked){
+            priority = ele[i].value;
+            }
+        }
+        return priority;
+    }
 }
 
 export { modal };

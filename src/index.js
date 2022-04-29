@@ -2,25 +2,23 @@
 // Single Responsibility - a class should have one responsibility
 import { pageLayout } from './page.js';
 import { inbox } from './inbox.js';
-import { modal } from './modal.js';  // 1. priority and checklist on todos 
-import { set } from 'date-fns';
-                                    // 2. functionality on todos - evertyhing
-pageLayout();
+import { modal } from './modal.js';  
+
+                                    
+pageLayout(); // next is - side bar - wiring up everything - localstorage - lil validations mby
 inbox();
 modal();
 
 
 class Todo{
-    constructor(title,description,dueDate,priority/*,checkList*/){   
+    constructor(title,description,dueDate,priority){   
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-       /* this.checkList = checkList;*/
     }
 
 }
-
 
 const addTaskBtn = document.querySelector('.addTask'); 
 addTaskBtn.addEventListener('click', () => {
@@ -28,19 +26,54 @@ addTaskBtn.addEventListener('click', () => {
     const makeTodo = document.querySelector('.addBtn'); 
     makeTodo.addEventListener('click', () => {
     
+    
         const title = document.getElementById('title').value; 
         const description = document.getElementById('description').value;
         const date = document.getElementById('date').value;             
-        const priority = document.getElementById('lessImportant').value; 
-        makeTodoo(title,description,date,priority); 
+       
+        makeTodoo(title,description,date,displayRadioValue()); 
     })
 })
 
 function  makeTodoo(title,description,date,priority){
     const todo = new Todo(title,description,date,priority);
+    console.log(todo);
+}
+
+
+document.addEventListener('click', (event) => {
+    removeTodo(event);
+})
+
+function removeTodo(event){
+    if (event.target.className === "rmvObj"){
+        const index = event.target.parentElement.getAttribute('data-obj-index');
+        document.querySelectorAll('[data-obj-index]')[index].remove();
+    }
+
+    const numObj = document.querySelector('.listObj');
+    for ( let i = 0 ; i < numObj.children.length ; i++){
+        document.querySelectorAll('[data-obj-index]')[i].setAttribute('data-obj-index', i ); //update data attr
+    }
 
 }
 
+function displayRadioValue() {
+    const ele = document.getElementsByName('ticket_type');
+    let priority;
+
+    for(let i = 0; i < ele.length; i++) {
+        if(ele[i].checked){
+        priority = ele[i].value;
+        }
+    }
+    return priority;
+}
+
+
+function defaultTodos(){
+
+}
 
 // Modal
 const openModalButtons = document.querySelectorAll('[data-modal-target]');

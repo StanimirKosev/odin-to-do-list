@@ -163,11 +163,12 @@ input[name*=date]{
 
 label[for*=important]{ 
     grid-area: 4 / 1 / 5  / 2;
-    color: rgba(200, 0, 0, 0.5);
+    color: rgba(200, 0, 0, 0.7);
 }
 
 label[for*=lessImportant]{
     grid-area: 5 / 1 / 6 / 2;
+    color: rgba(0, 0, 200, 0.5);
 }
 
 .addBtn,
@@ -243,6 +244,8 @@ label[for*=lessImportant]{
     margin-left: 15px;
 }
 
+.lessImportantObj,
+.importanceObj,
 .objDate{
     display: flex;
     flex-direction: row-reverse;
@@ -259,3 +262,13 @@ label[for*=lessImportant]{
     top: 2px;
     right: 2px;
 } 
+
+.lessImportantObj,
+.importanceObj{
+    padding: 0px 30px;
+    color: rgba(200, 0, 0, 0.7);
+}
+
+.lessImportantObj{
+    color: rgba(0, 0, 200, 0.5);
+}
