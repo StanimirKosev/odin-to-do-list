@@ -272,3 +272,55 @@ label[for*=lessImportant]{
 .lessImportantObj{
     color: rgba(0, 0, 200, 0.5);
 }
+
+/** Side-bar **/
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 30px;
+    font-size: 18px;
+    color: var(--primary-dark);
+}
+
+.addProject,
+.projects,
+.weekTodo,
+.todayTodo,
+.inboxBtn{
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: inherit;
+    border-radius: 6px;
+    width: 100%;
+    padding:7px 20px;
+    display: flex;
+    justify-content: start;
+    color: inherit;
+    margin-top: 5px;
+}
+
+.weekTodo:active, /* see about those l8*/
+.todayTodo:active,
+.inboxBtn:active{
+    background-color: rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    
+}
+
+.addProject:hover,
+.weekTodo:hover,
+.todayTodo:hover,
+.inboxBtn:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+    font-weight: bold; /*rmv this l8*/
+}
+
+.projects{
+    cursor: default;
+    font-size: 25px;
+    font-weight: bold;
+    padding:20px 0;
+}
