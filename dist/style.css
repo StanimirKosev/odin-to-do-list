@@ -100,7 +100,8 @@ img[src*=check]{
 }
 
 /* Inbox Content - inbox.js*/
-
+.weekTodoTitle,
+.todayTodoTitle,
 .inboxTitle{
     font-size: 32px;
     font-weight: bold;
@@ -284,6 +285,7 @@ label[for*=lessImportant]{
     color: var(--primary-dark);
 }
 
+.actualProject,
 .addProject,
 .projects,
 .weekTodo,
@@ -302,20 +304,13 @@ label[for*=lessImportant]{
     margin-top: 5px;
 }
 
-.weekTodo:active, /* see about those l8*/
-.todayTodo:active,
-.inboxBtn:active{
-    background-color: rgba(0, 0, 0, 0.1);
-    font-weight: bold;
-    
-}
-
+.actualProject:hover,
 .addProject:hover,
 .weekTodo:hover,
 .todayTodo:hover,
 .inboxBtn:hover{
     background-color: rgba(0, 0, 0, 0.1);
-    font-weight: bold; /*rmv this l8*/
+    font-weight: bold;
 }
 
 .projects{
@@ -324,3 +319,24 @@ label[for*=lessImportant]{
     font-weight: bold;
     padding:20px 0;
 }
+
+/* Side-bar Projects*/
+.listProjects{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.actualProject{
+    position: relative;
+}
+
+.rmvProject{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size:15px;
+}   
