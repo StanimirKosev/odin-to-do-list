@@ -3,11 +3,13 @@
 import { pageLayout } from './page.js';
 import { inbox } from './inbox.js';
 import { modal } from './modal.js';  
+import { sidebar } from './side-bar.js';
 
                                     
-pageLayout(); // next is - side bar - wiring up everything - localstorage - lil validations mby
-inbox();
+pageLayout(); //  side bar - wiring up everything - localstorage 
+inbox();    // might need to write the form in html if i want validations
 modal();
+sidebar();
 
 
 class Todo{
@@ -38,6 +40,7 @@ addTaskBtn.addEventListener('click', () => {
 function  makeTodoo(title,description,date,priority){
     const todo = new Todo(title,description,date,priority);
     console.log(todo);
+
 }
 
 
@@ -70,10 +73,11 @@ function displayRadioValue() {
     return priority;
 }
 
-
-function defaultTodos(){
-
-}
+/*function clearForm(){
+    let title = document.getElementById('title').value = '';
+    let author = document.getElementById('author').value = '';
+    let pages = document.getElementById('pages').value = '';
+}*/
 
 // Modal
 const openModalButtons = document.querySelectorAll('[data-modal-target]');

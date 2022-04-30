@@ -72,9 +72,9 @@ function modal(){
     })
 
     function makeObjDOM(){  // title,description,date,priority
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value; 
-        const date = document.getElementById('date').value;
+        let title = document.getElementById('title').value;
+        let description = document.getElementById('description').value; 
+        let date = document.getElementById('date').value;
        
 
         const listObj = document.querySelector('.listObj'); // place all todos in one element, more comfy for css
@@ -113,18 +113,27 @@ function modal(){
         for ( let i = 0 ; i < listObj.children.length ; i++){
             obj.setAttribute('data-obj-index',i);
         }
+         clearModal(); // creates empty obj's but you are not using them anyway, dom is good.
     }
+
 
     function displayRadioValue() {
         const ele = document.getElementsByName('ticket_type');
         let priority;
     
-        for(let i = 0; i < ele.length; i++) {
-            if(ele[i].checked){
+        for (let i = 0; i < ele.length; i++){
+            if (ele[i].checked){
             priority = ele[i].value;
             }
         }
         return priority;
+    }
+
+    function clearModal(){ // clear radio butt too
+        let title = document.getElementById('title').value = '';
+        let description = document.getElementById('description').value = ''; 
+        let date = document.getElementById('date').value = ''; // clears forms
+
     }
 }
 
