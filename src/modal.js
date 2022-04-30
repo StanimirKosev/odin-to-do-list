@@ -1,5 +1,5 @@
 function modal(){
-    const parent = document.getElementById('parent'); // change parent
+    const parent = document.getElementById('parent'); 
 
     const form = document.createElement('form');
     form.setAttribute("method", "post");
@@ -67,74 +67,76 @@ function modal(){
     overlay.setAttribute('id','overlay');
     parent.appendChild(overlay);
 
-    /*addBtn.addEventListener('click',() => {
+    addBtn.addEventListener('click',() => {
         makeObjDOM();
-    })*/
+    })
+
+    function makeObjDOM(){  
+        let title = document.getElementById('title').value;
+        let description = document.getElementById('description').value; 
+        let date = document.getElementById('date').value;
+       
+    
+        const listObj = document.querySelector('.listObj'); // place all todos in one element, more comfy for css
+        
+        const obj = document.createElement('div');   
+        listObj.appendChild(obj).className = 'obj'; 
+        
+        const objTitle = document.createElement('p');
+        objTitle.textContent = title;
+        obj.appendChild(objTitle).className = 'objTitle';
+    
+        const objDesc = document.createElement('p');
+        objDesc.textContent = description;
+        obj.appendChild(objDesc).className = 'objDesc';
+    
+        const objDate = document.createElement('div');
+        objDate.textContent = date;
+        obj.appendChild(objDate).className = 'objDate';
+    
+        const rmvObj = document.createElement('button');
+        rmvObj.setAttribute('type','button');
+        rmvObj.textContent = 'X';
+        obj.appendChild(rmvObj).className = 'rmvObj'; 
+    
+        if (displayRadioValue() === 'Important'){
+            const importanceObj = document.createElement('div');
+            importanceObj.textContent = displayRadioValue();
+            obj.appendChild(importanceObj).className = 'importanceObj';
+        }
+        else if(displayRadioValue() === 'Not important'){
+            const lessImporantObj = document.createElement('div');
+            lessImporantObj.textContent = displayRadioValue();
+            obj.appendChild(lessImporantObj).className = 'lessImportantObj';
+        }
+    
+        for ( let i = 0 ; i < listObj.children.length ; i++){
+            obj.setAttribute('data-obj-index',i);
+        }
+         clearModal(); // creates empty obj's but you are not using them anyway, dom is good.
+    
+         function displayRadioValue() {
+            const ele = document.getElementsByName('ticket_type');
+            let priority;
+        
+            for (let i = 0; i < ele.length; i++){
+                if (ele[i].checked){
+                priority = ele[i].value;
+                }
+            }
+            return priority;
+        }
+    
+        function clearModal(){ // clear radio butt too
+            let title = document.getElementById('title').value = '';
+            let description = document.getElementById('description').value = ''; 
+            let date = document.getElementById('date').value = ''; // clears forms
+    
+        }
+    
+        }
 }
 
-function makeObjDOM(){  
-    let title = document.getElementById('title').value;
-    let description = document.getElementById('description').value; 
-    let date = document.getElementById('date').value;
-   
 
-    const listObj = document.querySelector('.listObj'); // place all todos in one element, more comfy for css
-    
-    const obj = document.createElement('div');   
-    listObj.appendChild(obj).className = 'obj'; 
-    
-    const objTitle = document.createElement('p');
-    objTitle.textContent = title;
-    obj.appendChild(objTitle).className = 'objTitle';
 
-    const objDesc = document.createElement('p');
-    objDesc.textContent = description;
-    obj.appendChild(objDesc).className = 'objDesc';
-
-    const objDate = document.createElement('div');
-    objDate.textContent = date;
-    obj.appendChild(objDate).className = 'objDate';
-
-    const rmvObj = document.createElement('button');
-    rmvObj.setAttribute('type','button');
-    rmvObj.textContent = 'X';
-    obj.appendChild(rmvObj).className = 'rmvObj'; 
-
-    if (displayRadioValue() === 'Important'){
-        const importanceObj = document.createElement('div');
-        importanceObj.textContent = displayRadioValue();
-        obj.appendChild(importanceObj).className = 'importanceObj';
-    }
-    else if(displayRadioValue() === 'Not important'){
-        const lessImporantObj = document.createElement('div');
-        lessImporantObj.textContent = displayRadioValue();
-        obj.appendChild(lessImporantObj).className = 'lessImportantObj';
-    }
-
-    for ( let i = 0 ; i < listObj.children.length ; i++){
-        obj.setAttribute('data-obj-index',i);
-    }
-     clearModal(); // creates empty obj's but you are not using them anyway, dom is good.
-
-     function displayRadioValue() {
-        const ele = document.getElementsByName('ticket_type');
-        let priority;
-    
-        for (let i = 0; i < ele.length; i++){
-            if (ele[i].checked){
-            priority = ele[i].value;
-            }
-        }
-        return priority;
-    }
-
-    function clearModal(){ // clear radio butt too
-        let title = document.getElementById('title').value = '';
-        let description = document.getElementById('description').value = ''; 
-        let date = document.getElementById('date').value = ''; // clears forms
-
-    }
-
-    }
-
-export { modal , makeObjDOM };
+export { modal };

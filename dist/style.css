@@ -125,7 +125,7 @@ img[src*=check]{
 }
 
 /*  Modal */
-form{   /* modal */
+#modal{   
     position: fixed; 
     top:16.8%;
     left: 11%;
@@ -144,7 +144,7 @@ form{   /* modal */
     z-index: 10;
 }
 
-form.active{
+#modal.active{
     transform: scale(1);
 }
 
@@ -172,6 +172,8 @@ label[for*=lessImportant]{
     color: rgba(0, 0, 200, 0.5);
 }
 
+.cancelProject,
+.addBtnSidebarModal,
 .addBtn,
 .rmvBtn{
     border-radius:6px;
@@ -184,18 +186,22 @@ label[for*=lessImportant]{
     cursor: pointer;
 }
 
+.addBtnSidebarModal,
 .addBtn{
     background-color: rgba(0, 200, 0, 0.5);
 }
 
+.cancelProject,
 .rmvBtn{
     background-color: rgba(200, 0, 0, 0.5);
 }
 
+.addBtnSidebarModal:hover,
 .addBtn:hover{
     background-color: rgba(0, 200, 0, 0.4);
 }
 
+.cancelProject,
 .rmvBtn:hover{
     background-color: rgba(200, 0, 0, 0.4);
 }
@@ -333,10 +339,32 @@ label[for*=lessImportant]{
 
 .rmvProject{
     position: absolute;
-    top: 2px;
+    top: 8px;
     right: 2px;
     border: none;
     background: none;
     cursor: pointer;
     font-size:15px;
 }   
+
+/* Sidebar Modal */
+#sidebarModal{   
+    transform: scale(0);
+    transition: 200ms ease-in-out;
+    z-index: 10;
+}
+
+#sidebarModal.active{
+    transform: scale(1);
+}
+
+.cancelProject,
+.addBtnSidebarModal{
+    margin: 0px;
+    width: 48%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cancelProject{
+    margin-left: 9px;
+}
