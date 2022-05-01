@@ -83,5 +83,16 @@ function sidebar(){
     }
 }
 
+function pjRender(projectTitle){
+    const inbox = document.querySelector('.inbox');
 
-export { sidebar };
+    const pjTitle = document.createElement('div');
+    pjTitle.textContent = projectTitle;
+    inbox.appendChild(pjTitle).className = 'pjTitle';
+
+    /*const listObj = document.createElement('div');
+    inbox.appendChild(listObj).className = 'listObj';*/
+}
+
+
+export { sidebar , pjRender };

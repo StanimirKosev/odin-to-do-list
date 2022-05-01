@@ -1,9 +1,9 @@
 import { pageLayout } from './page.js';
 import { inbox , todayTodo , weekTodo} from './inbox.js';
 import { modal } from './modal.js';  
-import { sidebar } from './side-bar.js';
+import { sidebar , pjRender } from './side-bar.js';
                                   
-pageLayout(); //   projects as webpack pages - localstorage 
+pageLayout(); //   - localstorage 
 inbox();
 modal();
 sidebar();
@@ -12,7 +12,7 @@ const inboxBtn = document.querySelector('.inboxBtn');
 inboxBtn.addEventListener('click', () => {
     emptyMain(main);
     inbox();
-    inboxModal();
+    inboxModal(); 
 })
 
 const todayBtn = document.querySelector('.todayTodo');
@@ -35,6 +35,31 @@ function emptyMain(element) {
 }
 
 
+
+/*const projectBtn = document.querySelectorAll('[data-pj-index]');*/
+/*projectBtn.addEventListener('click', () => {
+    emptyMain(main);
+})*/
+function projectsRender(event){
+    if ( event.target.className === "actualProject"){
+       emptyMain(main);
+        const index = event.target.getAttribute('data-pj-index');
+      const project = document.querySelectorAll('[data-pj-index]')[index];
+      const projectTitle = project.textContent.slice(0,-1);  // get the title of the el
+    
+      pjRender(projectTitle);
+    }
+}
+
+
+
+
+document.addEventListener('click', (event) => {
+    projectsRender(event);
+});
+
+
+
 document.addEventListener('click', (event) => {
     removeTodo(event);
 });
@@ -42,23 +67,24 @@ document.addEventListener('click', (event) => {
 function removeTodo(event){
     if (event.target.className === "rmvObj"){
         const index = event.target.parentElement.getAttribute('data-obj-index');
-        console.log(index);
         document.querySelectorAll('[data-obj-index]')[index].remove();
+
+        const numObj = document.querySelector('.listObj');
+        for ( let i = 0 ; i < numObj.children.length ; i++){
+            document.querySelectorAll('[data-obj-index]')[i].setAttribute('data-obj-index', i ); 
+        }
     }
 
     if (event.target.className === "rmvProject"){
         const index = event.target.parentElement.getAttribute('data-pj-index');
         document.querySelectorAll('[data-pj-index]')[index].remove();
-    }
+        
+        const numPj = document.querySelector('.listProjects');
 
-    const numObj = document.querySelector('.listObj');
-    const numPj = document.querySelector('.listProjects');
-
-    for ( let i = 0 ; i < numObj.children.length ; i++){
-        document.querySelectorAll('[data-obj-index]')[i].setAttribute('data-obj-index', i ); 
-    }
+   
     for ( let i = 0 ; i < numPj.children.length ; i++){
         document.querySelectorAll('[data-pj-index]')[i].setAttribute('data-pj-index', i );
+    }
     }
 }
 
@@ -70,7 +96,7 @@ const overlay = document.getElementById('overlay');
 inboxModal();
 function inboxModal(){
     const openModalButtons = document.querySelectorAll('[data-modal-target]');
-
+    
     openModalButtons.forEach(button => {
         button.addEventListener('click', () => {
             const modal = document.querySelector(button.dataset.modalTarget);
