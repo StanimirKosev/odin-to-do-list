@@ -84,13 +84,17 @@ function sidebar(){
         }
      
         function saveProject(){
-            let projectNum = 0; // different variable
+
+            let project_serialized = JSON.stringify({'project' : title}); // one changing var , one static ( project )
+
+            let projectNum = 0; 
+
             Object.keys(localStorage).forEach(function(key){
-                projectNum++; // increments on each obj
+                projectNum++; 
             });
 
-            let projecto = localStorage.setItem(projectNum,title);
-            console.log(localStorage);
+            let projecto = localStorage.setItem(projectNum,project_serialized);
+            
         }
     }
 }

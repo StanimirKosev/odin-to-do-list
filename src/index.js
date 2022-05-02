@@ -3,16 +3,16 @@ import { inbox , todayTodo , weekTodo} from './inbox.js';
 import { modal } from './modal.js';  
 import { sidebar , pjRender } from './side-bar.js';
                                   
-pageLayout(); //   - function that saves the project and todos.   1. from dom or from class
+pageLayout(); 
 inbox();
-modal();     // local storage , "clean code" + 1000 more things... rest needed
+modal();    
 sidebar();
 
 const inboxBtn = document.querySelector('.inboxBtn');
 inboxBtn.addEventListener('click', () => {
     emptyMain(main);
     inbox();
-    inboxModal(); 
+    inboxModal(); // might need to add something here again 
 })
 
 const todayBtn = document.querySelector('.todayTodo');
@@ -58,12 +58,12 @@ document.addEventListener('click', (event) => {
     removeTodo(event);
 });
 
-function removeTodo(event){
+function removeTodo(event){ // razdeli funkciqta na 2 
     if (event.target.className === "rmvObj"){
         const index = event.target.parentElement.getAttribute('data-obj-index'); 
         document.querySelectorAll('[data-obj-index]')[index].remove();
 
-         let indexLocalStorage = Object.keys(localStorage).sort()[index];
+        let indexLocalStorage = Object.keys(localStorage).sort()[index];
         localStorage.removeItem(indexLocalStorage); // maha izbran element, ne gleda dali e task ili pj .. trqbva da updatetvam key-a
         
 
@@ -78,32 +78,26 @@ function removeTodo(event){
 
             document.querySelectorAll('[data-obj-index]')[i].setAttribute('data-obj-index', i ); // index
         }
-         
-
-       /* for (let i = 0 ; i < localStorage.length ; i++){
-            let index = Object.keys(localStorage).sort()[i]; 
- 
-            
-                let value = localStorage.getItem(index);
-                
-              
-            
-               localStorage.removeItem(index);
-          
-               /* console.log(delOldIndex);*/
-               /* let updateKey = localStorage.setItem(i,value);
-        }*/
-
     }
 
     if (event.target.className === "rmvProject"){
         const index = event.target.parentElement.getAttribute('data-pj-index'); 
         document.querySelectorAll('[data-pj-index]')[index].remove();
         
+        let indexLocalStorage = Object.keys(localStorage).sort()[index];
+        localStorage.removeItem(indexLocalStorage); 
+
         const numPj = document.querySelector('.listProjects');
 
    
     for ( let i = 0 ; i < numPj.children.length ; i++){
+
+        let index = Object.keys(localStorage).sort()[i]; 
+            let value = localStorage.getItem(index); 
+            localStorage.removeItem(index); 
+            let updateKey = localStorage.setItem(i,value); 
+
+
         document.querySelectorAll('[data-pj-index]')[i].setAttribute('data-pj-index', i ); //index
     }
     }
@@ -197,39 +191,35 @@ class Todo{
     }
 }
 
-const addTaskBtn = document.querySelector('.addTask'); 
-addTaskBtn.addEventListener('click', () => {
+const makeTodo = document.querySelector('.addBtn'); 
+makeTodo.addEventListener('click', () => {
 
-    const makeTodo = document.querySelector('.addBtn'); 
-    makeTodo.addEventListener('click', () => {
-    
-    
-        const title = document.getElementById('title').value; 
-        const description = document.getElementById('description').value;
-        const date = document.getElementById('date').value;             
-       
-        makeTodoo(title,description,date,displayRadioValue()); 
-    
-    })
+    const title = document.getElementById('title').value; 
+    const description = document.getElementById('description').value;
+    const date = document.getElementById('date').value;             
+   
+    makeTodoo(title,description,date,displayRadioValue()); 
+
 })
+
 
 function  makeTodoo(title,description,date,priority){
     const todo = new Todo(title,description,date,priority);
     save(todo);
+    console.log('lqlq');
 }
 
 function save(todo){
     let num = 0;
-    let todo_serialized = JSON.stringify(todo); // object
-    let task_serialized = JSON.stringify({'task' : todo_serialized}); // task - static var
+    let todo_serialized = JSON.stringify(todo); 
+    let task_serialized = JSON.stringify({'task' : todo_serialized}); 
     
-    Object.keys(localStorage).forEach(function(key){ // one static var for the pj/task and one incrementing for the index
-        num++; // num - incrementing var ---- 
+    Object.keys(localStorage).forEach(function(key){ 
+        num++; 
      });
      
     let setStorage = localStorage.setItem(num, task_serialized);
-    /*console.log(Object.keys(localStorage));
-    console.log(Object.keys(localStorage).sort());*/ // raoti 
+
     let todo_deserialized = JSON.parse(localStorage.getItem(num));
 }
 
