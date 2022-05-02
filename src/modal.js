@@ -75,7 +75,7 @@ function modal(){
         let title = document.getElementById('title').value;
         let description = document.getElementById('description').value; 
         let date = document.getElementById('date').value;
-       
+
     
         const listObj = document.querySelector('.listObj'); // place all todos in one element, more comfy for css
         
@@ -113,7 +113,7 @@ function modal(){
         for ( let i = 0 ; i < listObj.children.length ; i++){
             obj.setAttribute('data-obj-index',i);
         }
-         clearModal(); // creates empty obj's but you are not using them anyway, dom is good.
+         /*clearModal(); */ // creates empty obj's but you are not using them anyway, dom is good.
     
          function displayRadioValue() {
             const ele = document.getElementsByName('ticket_type');

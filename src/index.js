@@ -3,9 +3,9 @@ import { inbox , todayTodo , weekTodo} from './inbox.js';
 import { modal } from './modal.js';  
 import { sidebar , pjRender } from './side-bar.js';
                                   
-pageLayout(); //   - localstorage 
+pageLayout(); //   - function that saves the project and todos.   1. from dom or from class
 inbox();
-modal();
+modal();     // local storage , "clean code" + 1000 more things... rest needed
 sidebar();
 
 const inboxBtn = document.querySelector('.inboxBtn');
@@ -34,18 +34,12 @@ function emptyMain(element) {
     }
 }
 
-
-
-/*const projectBtn = document.querySelectorAll('[data-pj-index]');*/
-/*projectBtn.addEventListener('click', () => {
-    emptyMain(main);
-})*/
 function projectsRender(event){
     if ( event.target.className === "actualProject"){
        emptyMain(main);
         const index = event.target.getAttribute('data-pj-index');
       const project = document.querySelectorAll('[data-pj-index]')[index];
-      const projectTitle = project.textContent.slice(0,-1);  // get the title of the el
+      const projectTitle = project.textContent.slice(0,-1);  
     
       pjRender(projectTitle);
     }
@@ -66,24 +60,51 @@ document.addEventListener('click', (event) => {
 
 function removeTodo(event){
     if (event.target.className === "rmvObj"){
-        const index = event.target.parentElement.getAttribute('data-obj-index');
+        const index = event.target.parentElement.getAttribute('data-obj-index'); 
         document.querySelectorAll('[data-obj-index]')[index].remove();
 
+         let indexLocalStorage = Object.keys(localStorage).sort()[index];
+        localStorage.removeItem(indexLocalStorage); // maha izbran element, ne gleda dali e task ili pj .. trqbva da updatetvam key-a
+        
+
         const numObj = document.querySelector('.listObj');
-        for ( let i = 0 ; i < numObj.children.length ; i++){
-            document.querySelectorAll('[data-obj-index]')[i].setAttribute('data-obj-index', i ); 
+        for ( let i = 0 ; i < numObj.children.length ; i++){ 
+          
+            let index = Object.keys(localStorage).sort()[i]; // vsichkite , sortnati , za kolkoto deca ima, ot nai malkiq index.
+            let value = localStorage.getItem(index); // vzemi stoinosta na izbraniq element
+            localStorage.removeItem(index); // premahni izbraniq element
+            let updateKey = localStorage.setItem(i,value); // napravi nov element sus sushtata stoinost i updatenat key 
+            
+
+            document.querySelectorAll('[data-obj-index]')[i].setAttribute('data-obj-index', i ); // index
         }
+         
+
+       /* for (let i = 0 ; i < localStorage.length ; i++){
+            let index = Object.keys(localStorage).sort()[i]; 
+ 
+            
+                let value = localStorage.getItem(index);
+                
+              
+            
+               localStorage.removeItem(index);
+          
+               /* console.log(delOldIndex);*/
+               /* let updateKey = localStorage.setItem(i,value);
+        }*/
+
     }
 
     if (event.target.className === "rmvProject"){
-        const index = event.target.parentElement.getAttribute('data-pj-index');
+        const index = event.target.parentElement.getAttribute('data-pj-index'); 
         document.querySelectorAll('[data-pj-index]')[index].remove();
         
         const numPj = document.querySelector('.listProjects');
 
    
     for ( let i = 0 ; i < numPj.children.length ; i++){
-        document.querySelectorAll('[data-pj-index]')[i].setAttribute('data-pj-index', i );
+        document.querySelectorAll('[data-pj-index]')[i].setAttribute('data-pj-index', i ); //index
     }
     }
 }
@@ -127,7 +148,6 @@ function closeModal(modal){
 overlay.addEventListener('click',() => {
     const modals = document.querySelectorAll('form.active');
     modals.forEach(modal => {
-        console.log(modals);
       closeModal(modal);
     })
 })
@@ -163,27 +183,18 @@ function  closeSidebarModal(sidebarModal){
 
 
 
-
-
-
-
-
-
-
-
 /**Prevents chrome pop up window when refreshing*/
 if ( window.history.replaceState ) {
     window.history.replaceState( null, null, window.location.href );
   }
 
-  /*class Todo{
+class Todo{
     constructor(title,description,dueDate,priority){   
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
     }
-
 }
 
 const addTaskBtn = document.querySelector('.addTask'); 
@@ -198,14 +209,36 @@ addTaskBtn.addEventListener('click', () => {
         const date = document.getElementById('date').value;             
        
         makeTodoo(title,description,date,displayRadioValue()); 
+    
     })
 })
 
 function  makeTodoo(title,description,date,priority){
     const todo = new Todo(title,description,date,priority);
-    console.log(todo);
+    save(todo);
+}
 
-}*/
+function save(todo){
+    let num = 0;
+    let todo_serialized = JSON.stringify(todo); // object
+    let task_serialized = JSON.stringify({'task' : todo_serialized}); // task - static var
+    
+    Object.keys(localStorage).forEach(function(key){ // one static var for the pj/task and one incrementing for the index
+        num++; // num - incrementing var ---- 
+     });
+     
+    let setStorage = localStorage.setItem(num, task_serialized);
+    /*console.log(Object.keys(localStorage));
+    console.log(Object.keys(localStorage).sort());*/ // raoti 
+    let todo_deserialized = JSON.parse(localStorage.getItem(num));
+}
+
+
+
+function get(){
+
+    
+}
 
 /*function clearForm(){
     let title = document.getElementById('title').value = '';
@@ -213,7 +246,7 @@ function  makeTodoo(title,description,date,priority){
     let pages = document.getElementById('pages').value = '';
 }*/
 
-/*function displayRadioValue() {
+function displayRadioValue() {
     const ele = document.getElementsByName('ticket_type');
     let priority;
 
@@ -223,4 +256,4 @@ function  makeTodoo(title,description,date,priority){
         }
     }
     return priority;
-}*/
+}

@@ -63,7 +63,10 @@ function sidebar(){
  
     function makeProject(){
         const listProjects = document.querySelector('.listProjects')
-        let title = document.getElementById('pjTitle').value; 
+        let title = document.getElementById('pjTitle').value;
+        
+        saveProject();
+        
         
         const actualProject = document.createElement('button');
         listProjects.appendChild(actualProject).className = 'actualProject';
@@ -79,7 +82,16 @@ function sidebar(){
         for ( let i = 0 ; i < listProjects.children.length ; i++){
             actualProject.setAttribute('data-pj-index',i);
         }
-        
+     
+        function saveProject(){
+            let projectNum = 0; // different variable
+            Object.keys(localStorage).forEach(function(key){
+                projectNum++; // increments on each obj
+            });
+
+            let projecto = localStorage.setItem(projectNum,title);
+            console.log(localStorage);
+        }
     }
 }
 
