@@ -12,12 +12,12 @@ function inbox(){
 
     const addTask = document.createElement('button'); 
     addTask.textContent = '+ Add Task';
-    addTask.setAttribute('data-modal-target','#modal'); // 1st button targeting modal ( the form element )
+    addTask.setAttribute('data-modal-target','#modal'); 
     inbox.appendChild(addTask).className = 'addTask';
 }
 
 function todayTodo(){
-    const inbox = document.querySelector('.inbox');// from page.js
+    const inbox = document.querySelector('.inbox');
 
     const todayTodoTitle = document.createElement('div');
     todayTodoTitle.textContent = 'Today';
@@ -29,7 +29,7 @@ function todayTodo(){
 }
 
 function weekTodo(){
-    const inbox = document.querySelector('.inbox');// from page.js
+    const inbox = document.querySelector('.inbox');
 
     const weekTodoTitle = document.createElement('div');
     weekTodoTitle.textContent = 'This week';

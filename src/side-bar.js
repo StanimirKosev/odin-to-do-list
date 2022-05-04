@@ -1,7 +1,5 @@
-// start with the inbox button
-
 function sidebar(){
-    const sidebar = document.querySelector('.sidebar');
+    const sidebar = document.querySelector('.sidebar'); // from page.js
 
     const inbox = document.createElement('button');
     inbox.textContent = "Inbox";
@@ -24,15 +22,15 @@ function sidebar(){
 
     const addProject = document.createElement('button'); 
     addProject.textContent = '+ Add Project';
-    addProject.setAttribute('data-modal-target-project','#sidebarModal'); // button targeting the sidebar modal
+    addProject.setAttribute('data-modal-target-project','#sidebarModal'); 
     sidebar.appendChild(addProject).className = 'addProject';
 
-    sidebarModal();
+    sidebarModal(); 
     function sidebarModal(){
         const sidebarModal = document.createElement('form');
         sidebarModal.setAttribute("method", "post");
         sidebarModal.setAttribute("action", "");
-        sidebarModal.setAttribute("id","sidebarModal"); // data attribute of the buttons will target this id
+        sidebarModal.setAttribute("id","sidebarModal"); 
         sidebar.appendChild(sidebarModal);
 
         const pjTitle = document.createElement('input');
@@ -42,31 +40,27 @@ function sidebar(){
         pjTitle.setAttribute("id","pjTitle");
         sidebarModal.appendChild(pjTitle);
 
-    const addBtnSidebarModal = document.createElement('button'); 
-    addBtnSidebarModal.setAttribute('type','button');
-    addBtnSidebarModal.textContent = 'Add';
-    sidebarModal.appendChild(addBtnSidebarModal).className = 'addBtnSidebarModal';
+        const addBtnSidebarModal = document.createElement('button'); 
+        addBtnSidebarModal.setAttribute('type','button');
+        addBtnSidebarModal.textContent = 'Add';
+        sidebarModal.appendChild(addBtnSidebarModal).className = 'addBtnSidebarModal';
 
-    const cancelProject = document.createElement('button');
-    cancelProject.setAttribute('data-close-button-project','#sidebarModal'); // targets the modal ( form el )
-    cancelProject.setAttribute('type','button');
-    cancelProject.textContent = 'Cancel';
-    sidebarModal.appendChild(cancelProject).className = 'cancelProject';
+        const cancelProject = document.createElement('button');
+        cancelProject.setAttribute('data-close-button-project','#sidebarModal'); 
+        cancelProject.setAttribute('type','button');
+        cancelProject.textContent = 'Cancel';
+        sidebarModal.appendChild(cancelProject).className = 'cancelProject';
 
-    addBtnSidebarModal.addEventListener('click', () =>{
-        makeProject();
-    })
-
+        addBtnSidebarModal.addEventListener('click', () =>{
+            makeProject();
+        })
     }
 
-    
- 
     function makeProject(){
         const listProjects = document.querySelector('.listProjects')
         let title = document.getElementById('pjTitle').value;
         
-        saveProject();
-        
+       
         
         const actualProject = document.createElement('button');
         listProjects.appendChild(actualProject).className = 'actualProject';
@@ -82,22 +76,23 @@ function sidebar(){
         for ( let i = 0 ; i < listProjects.children.length ; i++){
             actualProject.setAttribute('data-pj-index',i);
         }
-     
-        function saveProject(){
-
-            let project_serialized = JSON.stringify({'project' : title}); // one changing var , one static ( project )
-
-            let projectNum = 0; 
-
-            Object.keys(localStorage).forEach(function(key){
-                projectNum++; 
-            });
-
-            let projecto = localStorage.setItem(projectNum,project_serialized);
-            
+        
+        projectLocalStorage();
+        function projectLocalStorage(){
+            let key;
+         
+            let title_serialized = JSON.stringify(title);
+    
+            for ( let i = 0 ; i < listProjects.children.length ; i++){
+                key = 'project_'+i;
+            }
+    
+            localStorage.setItem(key,title_serialized); 
         }
     }
 }
+
+
 
 function pjRender(projectTitle){
     const inbox = document.querySelector('.inbox');

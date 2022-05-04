@@ -4,7 +4,7 @@ function modal(){
     const form = document.createElement('form');
     form.setAttribute("method", "post");
     form.setAttribute("action", "");
-    form.setAttribute("id","modal"); // data attribute of the buttons will target this id
+    form.setAttribute("id","modal"); 
     parent.appendChild(form);
 
     const todoTitle = document.createElement('input');
@@ -58,7 +58,7 @@ function modal(){
     form.appendChild(addBtn).className = 'addBtn';
 
     const rmvBtn = document.createElement('button');
-    rmvBtn.setAttribute('data-close-button','#modal'); // targets the modal ( form el )
+    rmvBtn.setAttribute('data-close-button','#modal'); 
     rmvBtn.setAttribute('type','button');
     rmvBtn.textContent = 'Cancel';
     form.appendChild(rmvBtn).className = 'rmvBtn';
@@ -76,8 +76,7 @@ function modal(){
         let description = document.getElementById('description').value; 
         let date = document.getElementById('date').value;
 
-    
-        const listObj = document.querySelector('.listObj'); // place all todos in one element, more comfy for css
+        const listObj = document.querySelector('.listObj'); 
         
         const obj = document.createElement('div');   
         listObj.appendChild(obj).className = 'obj'; 
@@ -110,12 +109,14 @@ function modal(){
             obj.appendChild(lessImporantObj).className = 'lessImportantObj';
         }
     
-        for ( let i = 0 ; i < listObj.children.length ; i++){
-            obj.setAttribute('data-obj-index',i);
+       
+        for ( let i = 0 ; i < listObj.children.length ; i++){ 
+
+            obj.setAttribute('data-obj-index',i); // kato ne e ednakuv data attr ne mi overwritva a mi pishe vste.
         }
          /*clearModal(); */ // creates empty obj's but you are not using them anyway, dom is good.
     
-         function displayRadioValue() {
+        function displayRadioValue(){
             const ele = document.getElementsByName('ticket_type');
             let priority;
         
@@ -127,14 +128,13 @@ function modal(){
             return priority;
         }
     
-        function clearModal(){ // clear radio butt too
+        /*function clearModal(){ // clear radio butt too
             let title = document.getElementById('title').value = '';
             let description = document.getElementById('description').value = ''; 
             let date = document.getElementById('date').value = ''; // clears forms
     
-        }
-    
-        }
+        }*/
+    }
 }
 
 
