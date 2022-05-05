@@ -70,73 +70,126 @@ function modal(){
     addBtn.addEventListener('click',() => {
         makeObjDOM();
     })
+}
 
-    function makeObjDOM(){  
-        let title = document.getElementById('title').value;
-        let description = document.getElementById('description').value; 
-        let date = document.getElementById('date').value;
+function makeObjDOM(){  
+    let title = document.getElementById('title').value;
+    let description = document.getElementById('description').value; 
+    let date = document.getElementById('date').value;
 
-        const listObj = document.querySelector('.listObj'); 
-        
-        const obj = document.createElement('div');   
-        listObj.appendChild(obj).className = 'obj'; 
-        
-        const objTitle = document.createElement('p');
-        objTitle.textContent = title;
-        obj.appendChild(objTitle).className = 'objTitle';
+    const listObj = document.querySelector('.listObj'); 
     
-        const objDesc = document.createElement('p');
-        objDesc.textContent = description;
-        obj.appendChild(objDesc).className = 'objDesc';
+    const obj = document.createElement('div');   
+    listObj.appendChild(obj).className = 'obj'; 
     
-        const objDate = document.createElement('div');
-        objDate.textContent = date;
-        obj.appendChild(objDate).className = 'objDate';
-    
-        const rmvObj = document.createElement('button');
-        rmvObj.setAttribute('type','button');
-        rmvObj.textContent = 'X';
-        obj.appendChild(rmvObj).className = 'rmvObj'; 
-    
-        if (displayRadioValue() === 'Important'){
-            const importanceObj = document.createElement('div');
-            importanceObj.textContent = displayRadioValue();
-            obj.appendChild(importanceObj).className = 'importanceObj';
-        }
-        else if(displayRadioValue() === 'Not important'){
-            const lessImporantObj = document.createElement('div');
-            lessImporantObj.textContent = displayRadioValue();
-            obj.appendChild(lessImporantObj).className = 'lessImportantObj';
-        }
-    
-       
-        for ( let i = 0 ; i < listObj.children.length ; i++){ 
+    const objTitle = document.createElement('p');
+    objTitle.textContent = title;
+    obj.appendChild(objTitle).className = 'objTitle';
 
-            obj.setAttribute('data-obj-index',i); // kato ne e ednakuv data attr ne mi overwritva a mi pishe vste.
-        }
-         /*clearModal(); */ // creates empty obj's but you are not using them anyway, dom is good.
-    
-        function displayRadioValue(){
-            const ele = document.getElementsByName('ticket_type');
-            let priority;
-        
-            for (let i = 0; i < ele.length; i++){
-                if (ele[i].checked){
-                priority = ele[i].value;
-                }
-            }
-            return priority;
-        }
-    
-        /*function clearModal(){ // clear radio butt too
-            let title = document.getElementById('title').value = '';
-            let description = document.getElementById('description').value = ''; 
-            let date = document.getElementById('date').value = ''; // clears forms
-    
-        }*/
+    const objDesc = document.createElement('p');
+    objDesc.textContent = description;
+    obj.appendChild(objDesc).className = 'objDesc';
+
+    const objDate = document.createElement('div');
+    objDate.textContent = date;
+    obj.appendChild(objDate).className = 'objDate';
+
+    const rmvObj = document.createElement('button');
+    rmvObj.setAttribute('type','button');
+    rmvObj.textContent = 'X';
+    obj.appendChild(rmvObj).className = 'rmvObj'; 
+
+    if (displayRadioValue() === 'Important'){
+        const importanceObj = document.createElement('div');
+        importanceObj.textContent = displayRadioValue();
+        obj.appendChild(importanceObj).className = 'importanceObj';
     }
+    else if(displayRadioValue() === 'Not important'){
+        const lessImporantObj = document.createElement('div');
+        lessImporantObj.textContent = displayRadioValue();
+        obj.appendChild(lessImporantObj).className = 'lessImportantObj';
+    }
+    
+    for ( let i = 0 ; i < listObj.children.length ; i++){ 
+       
+        obj.setAttribute('data-obj-index','task_'+i); // vulnerability- might overwrite existing localstorage items 
+    }                                                 
+
+    function displayRadioValue(){
+        const ele = document.getElementsByName('ticket_type');
+        let priority;
+    
+        for (let i = 0; i < ele.length; i++){
+            if (ele[i].checked){
+            priority = ele[i].value;
+            }
+        }
+        return priority;
+    }
+}
+
+function renderLocalStorage(){
+    for ( let i = 0 ; i < localStorage.length  ; i++ ){
+        let key =  Object.keys(localStorage).sort()[i];
+
+        if (key.includes('task')){
+            let todo_deserialized = JSON.parse(localStorage.getItem(key));
+        
+            const listObj = document.querySelector('.listObj'); 
+
+            const obj = document.createElement('div');   
+            obj.setAttribute('data-obj-index',key);    
+            listObj.appendChild(obj).className = 'obj';
+        
+            const objTitle = document.createElement('p');
+            objTitle.textContent = todo_deserialized.title;
+            obj.appendChild(objTitle).className = 'objTitle';
+        
+            const objDesc = document.createElement('p');
+            objDesc.textContent = todo_deserialized.description;
+            obj.appendChild(objDesc).className = 'objDesc';
+        
+            const objDate = document.createElement('div');
+            objDate.textContent = todo_deserialized.date;
+            obj.appendChild(objDate).className = 'objDate';
+        
+            const rmvObj = document.createElement('button');
+            rmvObj.setAttribute('type','button');
+            rmvObj.textContent = 'X';
+            obj.appendChild(rmvObj).className = 'rmvObj'; 
+        
+            if (todo_deserialized.priority === 'Important'){
+                const importanceObj = document.createElement('div');
+                importanceObj.textContent = todo_deserialized.priority;
+                obj.appendChild(importanceObj).className = 'importanceObj';
+            }
+            else if(todo_deserialized.priority === 'Not important'){
+                const lessImporantObj = document.createElement('div');
+                lessImporantObj.textContent = todo_deserialized.priority;
+                obj.appendChild(lessImporantObj).className = 'lessImportantObj';
+            }   
+        }
+    
+        if (key.includes('project')){
+            let project_deserialized = JSON.parse(localStorage.getItem(key));
+
+            const listProjects = document.querySelector('.listProjects')
+        
+            const actualProject = document.createElement('button');
+            actualProject.setAttribute('data-pj-index',key);
+            listProjects.appendChild(actualProject).className = 'actualProject';
+        
+            const titleProject = document.createElement('div');
+            titleProject.textContent = project_deserialized;
+            actualProject.appendChild(titleProject);
+        
+            const rmvProject = document.createElement('button');
+            rmvProject.textContent = 'X';
+            actualProject.appendChild(rmvProject).className = 'rmvProject';  
+        }
+    }  
 }
 
 
 
-export { modal };
+export { modal , renderLocalStorage};

@@ -1,12 +1,13 @@
 import { pageLayout } from './page.js';
 import { inbox , todayTodo , weekTodo} from './inbox.js';
-import { modal } from './modal.js';  
+import { modal , renderLocalStorage } from './modal.js';  
 import { sidebar , pjRender } from './side-bar.js';  
                                
 pageLayout();           
-inbox();                // dom stuff for tasks 
+inbox();                
 modal();                // functionality/arrangement of tasks 
 sidebar();
+renderLocalStorage();
 
 // Webpack / page changing logic 
 
@@ -43,7 +44,7 @@ document.addEventListener('click', (event) => {
     projectsRender(event);
 });
 
-const main = document.querySelector('.inbox'); // the element changed based on whats clicked 
+const main = document.querySelector('.inbox'); 
 
 function emptyMain(element) {
     while(element.firstElementChild){
@@ -91,37 +92,37 @@ function todoLocalStorage(todo){
     let todo_serialized = JSON.stringify(todo); 
  
     for ( let i = 0 ; i < numObj.children.length ; i++){
-        key = 'task_'+i;
+        key = 'task_'+i; // vulnerability- might overwrite existing localstorage items 
     }
 
     localStorage.setItem(key,todo_serialized);
-    //let todo_deserialized = JSON.parse(localStorage.getItem(num));
+    clearForm();
 }
 
 
 function removeObj(event){ 
     if (event.target.className === "rmvObj"){ // removes todo's
-        const index = event.target.parentElement.getAttribute('data-obj-index'); // index of data attr corresponds to localstorage key
+        const key = event.target.parentElement.getAttribute('data-obj-index'); 
         event.target.parentElement.remove(); 
-        localStorage.removeItem('task_'+index); 
+        localStorage.removeItem(key); 
     }
 
     if (event.target.className === "rmvProject"){ // removes projects
 
-        const index = event.target.parentElement.getAttribute('data-pj-index'); 
+        const key = event.target.parentElement.getAttribute('data-pj-index'); 
         event.target.parentElement.remove();
-        localStorage.removeItem('project_'+index); 
+        localStorage.removeItem(key); 
     }
 }
 document.addEventListener('click', (event) => { 
     removeObj(event);
 });
 
-/*function clearForm(){
+function clearForm(){
     let title = document.getElementById('title').value = '';
-    let author = document.getElementById('author').value = '';
-    let pages = document.getElementById('pages').value = '';
-}*/
+    let description = document.getElementById('description').value = ''; 
+    let date = document.getElementById('date').value = ''; 
+}
 
 // Modal - functionality  
 
@@ -202,3 +203,4 @@ function  closeSidebarModal(sidebarModal){
 if ( window.history.replaceState ) {
     window.history.replaceState( null, null, window.location.href );
 }
+

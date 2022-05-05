@@ -60,8 +60,6 @@ function sidebar(){
         const listProjects = document.querySelector('.listProjects')
         let title = document.getElementById('pjTitle').value;
         
-       
-        
         const actualProject = document.createElement('button');
         listProjects.appendChild(actualProject).className = 'actualProject';
     
@@ -74,7 +72,7 @@ function sidebar(){
         actualProject.appendChild(rmvProject).className = 'rmvProject';
     
         for ( let i = 0 ; i < listProjects.children.length ; i++){
-            actualProject.setAttribute('data-pj-index',i);
+            actualProject.setAttribute('data-pj-index','project_'+i); // vulnerability- might overwrite existing localstorage items 
         }
         
         projectLocalStorage();
@@ -84,15 +82,13 @@ function sidebar(){
             let title_serialized = JSON.stringify(title);
     
             for ( let i = 0 ; i < listProjects.children.length ; i++){
-                key = 'project_'+i;
+                key = 'project_'+i; // vulnerability 
             }
     
             localStorage.setItem(key,title_serialized); 
         }
     }
 }
-
-
 
 function pjRender(projectTitle){
     const inbox = document.querySelector('.inbox');
