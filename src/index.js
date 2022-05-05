@@ -3,12 +3,12 @@ import { inbox , todayTodo , weekTodo} from './inbox.js';
 import { modal , renderLocalStorage , renderToday , renderThisWeek } from './modal.js';  
 import { sidebar , pjRender , projectsRender } from './side-bar.js';  
                                
-pageLayout();           
-inbox();                
-modal();                
-sidebar();
-renderLocalStorage();
-projectsRender();
+pageLayout();            // Things to improve
+inbox();                    //1. JS Validations 
+modal();                    //2. Better arrangement of code - for different modules ( dom in one place, application logic in another)
+sidebar();                                                              // and in the modules themselfs, better uses of classes etc.
+renderLocalStorage();       //3. Projects functionality, to be able to add todos in a specific project.
+projectsRender();           //4. Removing the vulnerability of overwriting existing todos.
 
 // Webpack / page changing logic 
 
