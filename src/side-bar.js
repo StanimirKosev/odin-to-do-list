@@ -65,7 +65,7 @@ function sidebar(){
     
         const titleProject = document.createElement('div');
         titleProject.textContent = title;
-        actualProject.appendChild(titleProject);
+        actualProject.appendChild(titleProject).className = 'ifClickTitle';
     
         const rmvProject = document.createElement('button');
         rmvProject.textContent = 'X';
@@ -85,21 +85,45 @@ function sidebar(){
                 key = 'project_'+i; // vulnerability 
             }
     
-            localStorage.setItem(key,title_serialized); 
+            localStorage.setItem(key,title_serialized);
+            title = document.getElementById('pjTitle').value = '';
         }
     }
 }
 
-function pjRender(projectTitle){
+function pjRender(title){
     const inbox = document.querySelector('.inbox');
 
     const pjTitle = document.createElement('div');
-    pjTitle.textContent = projectTitle;
+    pjTitle.textContent = title;
     inbox.appendChild(pjTitle).className = 'pjTitle';
 
-    /*const listObj = document.createElement('div');
-    inbox.appendChild(listObj).className = 'listObj';*/
+    const listObj = document.createElement('div');
+    inbox.appendChild(listObj).className = 'listObj';
+}
+
+function projectsRender(){
+    for ( let i = 0 ; i < localStorage.length  ; i++ ){
+        let key =  Object.keys(localStorage).sort()[i];
+        if (key.includes('project')){
+            let project_deserialized = JSON.parse(localStorage.getItem(key));
+    
+            const listProjects = document.querySelector('.listProjects')
+        
+            const actualProject = document.createElement('button');
+            actualProject.setAttribute('data-pj-index',key);
+            listProjects.appendChild(actualProject).className = 'actualProject';
+        
+            const titleProject = document.createElement('div');
+            titleProject.textContent = project_deserialized;
+            actualProject.appendChild(titleProject).className = 'ifClickTitle';
+        
+            const rmvProject = document.createElement('button');
+            rmvProject.textContent = 'X';
+            actualProject.appendChild(rmvProject).className = 'rmvProject';  
+        }
+    }
 }
 
 
-export { sidebar , pjRender };
+export { sidebar , pjRender , projectsRender };

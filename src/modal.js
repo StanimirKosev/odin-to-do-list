@@ -1,3 +1,5 @@
+import {  addWeeks, format, subDays } from "date-fns";
+
 function modal(){
     const parent = document.getElementById('parent'); 
 
@@ -150,7 +152,54 @@ function renderLocalStorage(){
             obj.appendChild(objDesc).className = 'objDesc';
         
             const objDate = document.createElement('div');
-            objDate.textContent = todo_deserialized.date;
+            objDate.textContent = todo_deserialized.dueDate;
+            obj.appendChild(objDate).className = 'objDate';
+           
+            const rmvObj = document.createElement('button');
+            rmvObj.setAttribute('type','button');
+            rmvObj.textContent = 'X';
+            obj.appendChild(rmvObj).className = 'rmvObj'; 
+        
+            if (todo_deserialized.priority === 'Important'){
+                const importanceObj = document.createElement('div');
+                importanceObj.textContent = todo_deserialized.priority;
+                obj.appendChild(importanceObj).className = 'importanceObj';
+            }
+            else if(todo_deserialized.priority === 'Not important'){
+                const lessImporantObj = document.createElement('div');
+                lessImporantObj.textContent = todo_deserialized.priority;
+                obj.appendChild(lessImporantObj).className = 'lessImportantObj';
+            }   
+        }
+    }  
+}
+
+const today = new Date();
+const todayFormatted = format(today, "yyyy-MM-dd" );
+
+function renderToday(){
+    for ( let i = 0 ; i < localStorage.length  ; i++ ){
+        let key =  Object.keys(localStorage).sort()[i];
+        let todo_deserialized = JSON.parse(localStorage.getItem(key));
+
+        if (key.includes('task') && todo_deserialized.dueDate == todayFormatted){
+    
+            const listObj = document.querySelector('.listObj'); 
+
+            const obj = document.createElement('div');   
+            obj.setAttribute('data-obj-index',key);    
+            listObj.appendChild(obj).className = 'obj';
+        
+            const objTitle = document.createElement('p');
+            objTitle.textContent = todo_deserialized.title;
+            obj.appendChild(objTitle).className = 'objTitle';
+        
+            const objDesc = document.createElement('p');
+            objDesc.textContent = todo_deserialized.description;
+            obj.appendChild(objDesc).className = 'objDesc';
+        
+            const objDate = document.createElement('div');
+            objDate.textContent = todo_deserialized.dueDate;
             obj.appendChild(objDate).className = 'objDate';
         
             const rmvObj = document.createElement('button');
@@ -168,28 +217,58 @@ function renderLocalStorage(){
                 lessImporantObj.textContent = todo_deserialized.priority;
                 obj.appendChild(lessImporantObj).className = 'lessImportantObj';
             }   
-        }
-    
-        if (key.includes('project')){
-            let project_deserialized = JSON.parse(localStorage.getItem(key));
-
-            const listProjects = document.querySelector('.listProjects')
-        
-            const actualProject = document.createElement('button');
-            actualProject.setAttribute('data-pj-index',key);
-            listProjects.appendChild(actualProject).className = 'actualProject';
-        
-            const titleProject = document.createElement('div');
-            titleProject.textContent = project_deserialized;
-            actualProject.appendChild(titleProject);
-        
-            const rmvProject = document.createElement('button');
-            rmvProject.textContent = 'X';
-            actualProject.appendChild(rmvProject).className = 'rmvProject';  
-        }
-    }  
+        }   
+    }
 }
 
+const yesterday = subDays(today,1);
+const yesterdayF = format(yesterday, "yyyy-MM-dd");
 
+const week = addWeeks(today,1);
+const weekFormatted = format(week, "yyyy-MM-dd" );
 
-export { modal , renderLocalStorage};
+function renderThisWeek(){
+    for ( let i = 0 ; i < localStorage.length  ; i++ ){
+        let key =  Object.keys(localStorage).sort()[i];
+        let todo_deserialized = JSON.parse(localStorage.getItem(key));
+    
+        if (key.includes('task') && (todo_deserialized.dueDate > yesterdayF && todo_deserialized.dueDate < weekFormatted)){
+    
+            const listObj = document.querySelector('.listObj'); 
+
+            const obj = document.createElement('div');   
+            obj.setAttribute('data-obj-index',key);    
+            listObj.appendChild(obj).className = 'obj';
+        
+            const objTitle = document.createElement('p');
+            objTitle.textContent = todo_deserialized.title;
+            obj.appendChild(objTitle).className = 'objTitle';
+        
+            const objDesc = document.createElement('p');
+            objDesc.textContent = todo_deserialized.description;
+            obj.appendChild(objDesc).className = 'objDesc';
+        
+            const objDate = document.createElement('div');
+            objDate.textContent = todo_deserialized.dueDate;
+            obj.appendChild(objDate).className = 'objDate';
+        
+            const rmvObj = document.createElement('button');
+            rmvObj.setAttribute('type','button');
+            rmvObj.textContent = 'X';
+            obj.appendChild(rmvObj).className = 'rmvObj'; 
+        
+            if (todo_deserialized.priority === 'Important'){
+                const importanceObj = document.createElement('div');
+                importanceObj.textContent = todo_deserialized.priority;
+                obj.appendChild(importanceObj).className = 'importanceObj';
+            }
+            else if(todo_deserialized.priority === 'Not important'){
+                const lessImporantObj = document.createElement('div');
+                lessImporantObj.textContent = todo_deserialized.priority;
+                obj.appendChild(lessImporantObj).className = 'lessImportantObj';
+            }   
+        }   
+    }
+}
+
+export { modal , renderLocalStorage , renderToday , renderThisWeek};

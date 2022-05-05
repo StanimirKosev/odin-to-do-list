@@ -1,13 +1,14 @@
 import { pageLayout } from './page.js';
 import { inbox , todayTodo , weekTodo} from './inbox.js';
-import { modal , renderLocalStorage } from './modal.js';  
-import { sidebar , pjRender } from './side-bar.js';  
+import { modal , renderLocalStorage , renderToday , renderThisWeek } from './modal.js';  
+import { sidebar , pjRender , projectsRender } from './side-bar.js';  
                                
 pageLayout();           
 inbox();                
-modal();                // functionality/arrangement of tasks 
+modal();                
 sidebar();
 renderLocalStorage();
+projectsRender();
 
 // Webpack / page changing logic 
 
@@ -15,33 +16,38 @@ const inboxBtn = document.querySelector('.inboxBtn');
 inboxBtn.addEventListener('click', () => {
     emptyMain(main);
     inbox();
-    inboxModal(); 
+    inboxModal();
+    renderLocalStorage(); 
 })
 
 const todayBtn = document.querySelector('.todayTodo');
 todayBtn.addEventListener('click', () => {
     emptyMain(main);
     todayTodo();
+    renderToday(); 
 })
 
 const weekBtn = document.querySelector('.weekTodo');
 weekBtn.addEventListener('click', () => {
     emptyMain(main);
     weekTodo();
+    renderThisWeek();
 })
 
-function projectsRender(event){
+function projectsEventListener(event){
     if ( event.target.className === "actualProject"){
+        const title = event.target.textContent.slice(0,-1); 
+        emptyMain(main); 
+        pjRender(title);
+    }
+    if (event.target.className === "ifClickTitle"){
+        const title = event.target.parentElement.textContent.slice(0,-1);
         emptyMain(main);
-        const index = event.target.getAttribute('data-pj-index');
-        const project = document.querySelectorAll('[data-pj-index]')[index];
-        const projectTitle = project.textContent.slice(0,-1);  
-        
-        pjRender(projectTitle);
+        pjRender(title);
     }
 }
 document.addEventListener('click', (event) => {
-    projectsRender(event);
+    projectsEventListener(event);
 });
 
 const main = document.querySelector('.inbox'); 
@@ -119,9 +125,9 @@ document.addEventListener('click', (event) => {
 });
 
 function clearForm(){
-    let title = document.getElementById('title').value = '';
-    let description = document.getElementById('description').value = ''; 
-    let date = document.getElementById('date').value = ''; 
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = ''; 
+    document.getElementById('date').value = ''; 
 }
 
 // Modal - functionality  
